@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1",
+  "gram_id": "repo://example-project/src/users.js#fetchUser",
+  "model_compatibility": {
+    "base_model": "example-model",
+    "base_model_fingerprint": "sha256:replace-with-model-weight-digest",
+    "tokenizer_fingerprint": "sha256:replace-with-tokenizer-digest",
+    "encoder_revision": "prsc-encoder-dev"
+  },
+  "pattern_ref": {
+    "pattern_id": "ASYNC_DATABASE_LOOKUP_WITH_ERROR_HANDLING_V1",
+    "pattern_type": "code_semantic_template",
+    "catalogue_revision": "catalogue-2026-11-15"
+  },
+  "residual": {
+    "encoding": "structured_json",
+    "payload": {
+      "function_name": "fetchUser",
+      "argument_names": ["id"],
+      "database_path": "database.users",
+      "operation": "find",
+      "error_behavior": "log_and_rethrow"
+    },
+    "confidence": 0.98
+  },
+  "relations": [
+    {
+      "target_gram_id": "repo://example-project/src/database.js#users",
+      "relation_type": "depends_on",
+      "required_for_activation": true
+    }
+  ],
+  "provenance": [
+    {
+      "source_id": "src/users.js",
+      "uri": "file:src/users.js",
+      "start_line": 12,
+      "end_line": 20,
+      "content_sha256": "replace-with-source-file-hash",
+      "captured_at": "2026-11-15T00:00:00Z"
+    }
+  ],
+  "activation": {
+    "preferred_mode": "reconstruct_then_validate",
+    "cache_manifest": null,
+    "exact_fallback_uri": "file:src/users.js#L12-L20"
+  },
+  "sensitivity": "internal",
+  "validity": {
+    "archive_revision": "git:replace-with-commit-sha",
+    "valid_from": "2026-11-15T00:00:00Z",
+    "valid_until": null
+  }
+}

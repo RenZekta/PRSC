@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this proposal or the draft K-gram schema, cite the repository version you used."
+title: "Prior-Relative Sparse Context: Knowledge Grams for Selective Activation of Model-Relative Memory"
+version: 0.1.0
+date-released: 2026-11-15
+license: CC-BY-4.0
+abstract: >-
+  A research proposal for compiling external context into addressable Knowledge
+  Grams that reference reusable patterns, store model-relative residuals, retain
+  provenance and dependencies, and activate only a query-specific working set.
+authors:
+  - name: "[Author name(s) to be completed]"

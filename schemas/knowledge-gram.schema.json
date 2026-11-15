@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/prsc/schemas/knowledge-gram.schema.json",
+  "title": "PRSC Knowledge Gram",
+  "description": "Draft record format for an addressable model-relative memory unit. Replace example.org with a stable project domain before publication.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gram_id", "model_compatibility", "pattern_ref", "residual", "relations", "provenance", "activation", "sensitivity", "validity"],
+  "properties": {
+    "schema_version": {"type": "string", "minLength": 1},
+    "gram_id": {"type": "string", "minLength": 1},
+    "model_compatibility": {
+      "type": "object", "additionalProperties": false,
+      "required": ["base_model", "base_model_fingerprint", "tokenizer_fingerprint", "encoder_revision"],
+      "properties": {
+        "base_model": {"type": "string", "minLength": 1},
+        "base_model_fingerprint": {"type": "string", "minLength": 1},
+        "tokenizer_fingerprint": {"type": "string", "minLength": 1},
+        "encoder_revision": {"type": "string", "minLength": 1},
+        "adapter_fingerprint": {"type": ["string", "null"]}
+      }
+    },
+    "pattern_ref": {
+      "type": ["object", "null"], "additionalProperties": false,
+      "required": ["pattern_id", "pattern_type", "catalogue_revision"],
+      "properties": {
+        "pattern_id": {"type": "string", "minLength": 1},
+        "pattern_type": {"type": "string", "minLength": 1},
+        "catalogue_revision": {"type": "string", "minLength": 1}
+      }
+    },
+    "residual": {
+      "type": "object", "additionalProperties": false,
+      "required": ["encoding", "payload", "confidence"],
+      "properties": {
+        "encoding": {"enum": ["text", "structured_json", "latent_ref", "binary_ref", "patch"]},
+        "payload": {},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "relations": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["target_gram_id", "relation_type", "required_for_activation"],
+        "properties": {
+          "target_gram_id": {"type": "string", "minLength": 1},
+          "relation_type": {"type": "string", "minLength": 1},
+          "required_for_activation": {"type": "boolean"}
+        }
+      }
+    },
+    "provenance": {
+      "type": "array", "minItems": 1, "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_id", "uri", "content_sha256", "captured_at"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 1},
+          "uri": {"type": "string", "minLength": 1},
+          "start_line": {"type": "integer", "minimum": 1},
+          "end_line": {"type": "integer", "minimum": 1},
+          "content_sha256": {"type": "string", "minLength": 1},
+          "captured_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "activation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["preferred_mode", "cache_manifest", "exact_fallback_uri"],
+      "properties": {
+        "preferred_mode": {"enum": ["exact_source", "reconstruct_then_validate", "precomputed_kv", "latent_activation"]},
+        "cache_manifest": {"type": ["object", "null"]},
+        "exact_fallback_uri": {"type": "string", "minLength": 1}
+      }
+    },
+    "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["archive_revision", "valid_from", "valid_until"],
+      "properties": {
+        "archive_revision": {"type": "string", "minLength": 1},
+        "valid_from": {"type": "string", "format": "date-time"},
+        "valid_until": {"type": ["string", "null"], "format": "date-time"}
+      }
+    }
+  }
+}
